@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog All</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'ProyectoWebApps/assets/favicon.ico'%}">
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'ProyectoWebApps/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'normalize.css' %}" rel="stylesheet">
+    </head>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{%url 'Home'%}">Blog All</a><a class='navbar-brand' href="{%url 'mi_perfil' %}">{{request.user.username}}</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'mi_perfil'%}">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'publicar'%}">Publicar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'comunidad'%}">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Logout'%}">Cerrar sesion</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Home'%}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'comunidad'%}">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'CrearUsuario'%}">Registrarme</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="search">
+                    <form class="search-form px-4" method="GET" action="{% url 'Contacto'%}">
+                        <input type="text" placeholder="Buscar" class='border rounded' name="buscar" value="{{request.GET.buscar}}" required>
+                        <button type='submit' class='btn btn-primary'> <i class='fa fa-search'></i></button>
+                    </form>
+                </div>
+                {% else %}
+                {% endif %}
+            </div>
+        </nav>
+        
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        {% if request.user.is_authenticated %}
+                        <h1 class="text-white font-weight-bold">Tú lugar favorito lo puedes encontrar aqui!</h1>
+                        <hr class="divider" />
+                        {% else %}
+                        <h1 class="text-white font-weight-bold">Sesion cerrada</h1>
+                        {% endif %}
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Empezar a buscar algo de tu interes puede ser una de las mejores cosas que puedas aprender hoy! Solo con buscar te mostraremos nuestros mejores catalogos!</p>
+                        <a class="btn btn-primary btn-xl" href="{%url 'publicar' %}">Publicar</a>
+                    </div>
+                    {% else %}
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Al parecer no te encuentras registrado, una vez lo haya hecho podras publicar y acceder a diferentes funciones más. Qué esperas?!</p>
+                        <a class="btn btn-primary btn-xl" href="{%url 'autenticacion' %}">Iniciar Sesion</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        
+        <!-- About-->
+    {% block content %}
+
+    {% endblock %}
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">Empecemos con un click!</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Siguenos en nuestras redes sociales</p>
+                        <div class="container">
+                            <a href="#" class="fa fa-facebook"></a>  
+                            <a href="#" class="fa fa-twitter"></a> 
+                            <a href="#" class="fa fa-instagram"></a>  
+                            <a href="#" class="fa fa-google"></a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if request.user.is_authenticated %}
+                {% else %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                            <div class='row gx-2 gx-lg-3 justify-content-center '>
+                                <label class='row gx-4 gx-lg-5 justify-content-center pb-2' for="{{ field.nombre }}"></label>
+                                {{form}}
+                                <center>
+                                    <button type="submit" class="btn btn-success btn-lg">Iniciar sesion</button>
+                                </center>
+                            {% endif %}
+                            </div>
+                        <br>
+                </form>
+
+                <div class="row gx-4 gx-lg-5 justify-content-center p-5">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <i class="fa fa-envelope"></i>
+                        <div>Diazparedesedwinantonio@gmail.com</div>
+                        <i class="fa fa-user"></i>
+                        <div>Edwin Antonio Diaz Paredes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2022 - Blog All</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'ProyectoWebApps/js/scripts.js%'%}"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
+<style>
+    *, *::before, *::after {
+        font-size: 13px;
+    }
+    .container-article a{
+        display: inline-block;
+        padding: 50px;
+        margin: 50px;
+        font-size: 20px;
+    }
+</style>

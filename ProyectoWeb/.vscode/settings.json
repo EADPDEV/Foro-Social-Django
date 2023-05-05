@@ -1,0 +1,10 @@
+{
+    "workbench.editor.enablePreview": false,
+    "editor.codeActionsOnSave": {
+    
+    },
+
+    "emmet.includeLanguages": {
+        "django-html": "html",
+   }
+}

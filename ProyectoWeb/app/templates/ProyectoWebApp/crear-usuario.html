@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load crispy_forms_tags %}
+        {% load static %}
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog All</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'ProyectoWebApps/assets/favicon.ico'%}">
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'ProyectoWebApps/css/styles.css' %}" rel="stylesheet">
+    </head>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">Blog All</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'mi_perfil'%}">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'publicar'%}">Publicar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'comunidad'%}">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Logout'%}">Cerrar sesion</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'autenticacion'%}">Iniciar sesion</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="search">
+                    <form class="search-form px-4" method="GET" action="{% url 'Contacto'%}">
+                        <input type="text" placeholder="Buscar" class='border rounded' name="buscar" value="{{request.GET.buscar}}" required>
+                        <button type='submit' class='btn btn-primary'> <i class='fa fa-search'></i></button>
+                    </form>
+                </div>
+                {% else %}
+                {% endif %}
+            </div>
+        </nav>
+        
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">Tú lugar favorito lo puedes encontrar aqui!</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Empezar a buscar algo de tu interes puede ser uno de los mejores provechos que puedas darte! Solo con buscar te mostraremos nuestros mejores catalogos!</p>
+                        <a class="btn btn-primary btn-xl" href="../../sobre_nosotros">Sobre Nosotros</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">Empecemos con un click!</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Listo para empezar tu proxima investigacion? Registrate!</p>
+                    </div>
+                </div>
+                <form action="" method="POST">{% csrf_token %}
+                    <table>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+               
+                                    {{formu|crispy}}
+
+                                <style>
+                                    ul{
+                                        display: none;
+                                    }
+                                    .helptext{
+                                        display: none;
+                                    }
+                                    .form-control{
+                                        background-color: #fafafa;
+                                    }
+                                    @media only screen and (min-width: 1200px) html {
+                                        font-size: 14px;
+                                      }
+                               </style>
+                            
+                            
+                            {% if messages %}
+
+                            {% for messages in message %}
+                            
+                            <div class='notification' {{ messages.tags }}></div>
+                            {{messages}}
+                            {% endfor %}
+                            
+                            {% endif %}
+
+                            <br>
+                            <center>
+                                <button type="submit" class="btn btn-success btn-lg">Registrar usuario</button>
+                                <a class="btn btn-success btn-lg" href={% url 'autenticacion'%}>¿Ya tienes una cuenta?</a>
+                            </center>
+                          </form>
+                    </table>
+                </form>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center p-5">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <i class="fa fa-envelope"></i>
+                        <div>Diazparedesedwinantonio@gmail.com</div>
+                        <i class="fa fa-user"></i>
+                        <div>Edwin Antonio Diaz Paredes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2022 - Company Name</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'ProyectoWebApps/js/scripts.js%'%}"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

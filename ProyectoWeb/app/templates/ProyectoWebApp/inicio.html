@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        {% load static %}
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog All</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'ProyectoWebApps/assets/favicon.ico'%}">
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'ProyectoWebApps/css/styles.css' %}" rel="stylesheet">
+    </head>
+
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="{% url 'Home'%}">Blog All</a> <a class='navbar-brand' href="{%url 'mi_perfil' %}">{{user.username}}</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'mi_perfil'%}">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'publicar'%}">Publicar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'comunidad'%}">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Logout'%}">Cerrar sesion</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'autenticacion'%}">Iniciar sesion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'comunidad'%}">Comunidad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'CrearUsuario'%}">Registrarme</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="search">
+                    <form class="search-form px-4" method="GET" action="{% url 'Contacto'%}">
+                        <input type="text" placeholder="Buscar" class='border rounded' name="buscar" value="{{request.GET.buscar}}" required>
+                        <button type='submit' class='btn btn-primary'> <i class='fa fa-search'></i></button>
+                    </form>
+                </div>
+                {% else %}
+                {% endif %}
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">Tú lugar favorito lo puedes encontrar aqui!</h1>
+                        <hr class="divider" />
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">Empezar a buscar algo de tu interes puede ser una de las mejores cosas que puedas aprender hoy! Solo con buscar te mostraremos nuestros mejores catalogos!</p>
+                        <a class="btn btn-primary btn-xl" href="{%url 'SobreNosotros' %}">Sobre Nosotros</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Empecemos con un click!</h2>
+                        <hr class="divider divider-light" />
+                        <p class="text-white-75 mb-4">Preparado para empezar tu proxima redacción?</p>
+                        <a class="btn btn-light btn-xl" href="#Crear-Usuario">Empecemos!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container px-4 px-lg-5">
+                <h2 class="text-center mt-0">Comparte tus historias</h2>
+                <hr class="divider" />
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="fa fa-diamond fs-1 text-primary"></i></div>
+                            <style>
+                                .fa-diamond:before {
+                                    font-size: 20px;
+                                }
+                            </style>
+                            <h3 class="h4 mb-2">Temas de estudio</h3>
+                            <p class="text-muted mb-0">Nuestros productos son actualizados regularemente para tus gustos!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="fa fa-laptop fs-1 text-primary"></i></div>
+                            <style>
+                                .fa-laptop:before {
+                                    font-size: 20px;
+                                }
+                            </style>
+                            <h3 class="h4 mb-2">Lo nuevo en tecnologia</h3>
+                            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="fa fa-globe fs-1 text-primary"></i></div>
+                            <style>
+                                .fa-globe:before {
+                                    font-size: 20px;
+                                }
+                            </style>
+                            <h3 class="h4 mb-2">Publica cuando quieras</h3>
+                            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="fa fa-heart fs-1 text-primary">
+                                <style>
+                                    .fa-heart:before {
+                                        font-size: 20px;
+                                    }
+                                </style>
+                            </i></div>
+                            <h3 class="h4 mb-2">Amamos verte aqui</h3>
+                            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Portfolio-->
+        {% if request.user.is_authenticated %}
+        <div id="portfolio">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/1.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/1.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Artesania</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/2.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/2.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Libros</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/3.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/3.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Fotografia</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/4.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/4.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Cocina</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/5.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/5.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Cultura</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="{% static 'ProyectoWebApps/assets/img/portfolio/fullsize/6.jpg'%}" title="Ver blog">
+                            <img class="img-fluid" src="{% static 'ProyectoWebApps/assets/img/portfolio/thumbnails/6.jpg'%}" alt="..." />
+                            <div class="portfolio-box-caption p-3">
+                                <div class="project-category text-white-50">Mecanica</div>
+                                <div class="project-name">Ver blog</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Call to action-->
+        {% if request.user.is_authenticated %}
+
+        <section class="page-section bg-dark text-white" id='Crear-Usuario'>
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4">Compartenos tus ideas!</h2>
+                <a class="btn btn-light btn-xl" href="{% url 'publicar'%}">Publicar!</a>
+            </div>
+        </section>
+
+        {% else %}
+
+        <section class="page-section bg-dark text-white" id='Crear-Usuario'>
+            <div class="container px-4 px-lg-5 text-center">
+                <h2 class="mb-4">Compartenos tus ideas!</h2>
+                <a class="btn btn-light btn-xl" href="{% url 'CrearUsuario'%}">Crear cuenta!</a>
+            </div>
+        </section>
+        {% endif %}
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">Empecemos con un click!</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Siguenos en nuestras redes sociales</p>
+                        <div class="container">
+                            <a href="#" class="fa fa-facebook"></a>  
+                            <a href="#" class="fa fa-twitter"></a> 
+                            <a href="#" class="fa fa-instagram"></a>  
+                            <a href="#" class="fa fa-google"></a>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <form action="" method="post">{% csrf_token %}
+                    <table>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class='row gx-2 gx-lg-3 justify-content-center '>
+                                <label class='row gx-5 gx-4 justify-content-center pb-2 password' for="{{ field.nombre }}"></label>
+                                {{field}}
+                            </div>
+                            {% endfor %}
+                            <br>
+                          </form>
+                    </table>
+                </form>
+                  
+                <div class="row gx-4 gx-lg-5 justify-content-center p-5">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <i class="fa fa-envelope"></i>
+                        <div>Diazparedesedwinantonio@gmail.com</div>
+                        <i class="fa fa-user"></i>
+                        <div>Edwin Antonio Diaz Paredes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2022 - Blog All</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <script src="{% static 'ProyectoWebApps/js/scripts.js%'%}"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
+<style>
+    *, *::before, *::after {
+        font-size: 13px;
+    }
+</style>

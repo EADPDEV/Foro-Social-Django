@@ -1,0 +1,15 @@
+{% extends 'ProyectoWebApp/base.html' %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<hr>
+<div class="text-center">
+    <article class='ps-3'>
+        <h5>Hola, que tal soy el creador detras de lo que es el backend de esta aplicacion, mi nombre es Edwin Antonio estudiante de la Universidad Dominicana O&M 
+            durantes estos 4 años que he tenido en mi carrera he desarrollado diversas aplicaciones de las cuales puedo hacer lujo de mostrar
+        </h5>
+    </article>
+</div>
+{% else %}
+<h3>sobre nosotros</h3>
+{% endif %}
+{% endblock  %}

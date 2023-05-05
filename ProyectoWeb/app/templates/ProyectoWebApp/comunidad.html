@@ -1,0 +1,96 @@
+{% extends 'ProyectoWebApp/base.html' %}
+{% load humanize %}
+{% block content %}
+
+{% if request.user.is_authenticated %} {% comment "" %} if user is loged in{% endcomment %}
+{% for post in posts %}
+<article>
+    <div class="container-article">
+        <div class='hola'>
+            <img src="{{ post.user.perfiles.image.url }}" align="left" alt={{post.user.username}}>
+            <h2 class="username"><a href="{% url 'otro_usuario' post.user.username %}">@{{post.user.username}}</a></h2>
+                <time data-time="#"><i class="fa fa-clock-o"></i> {{post.timestamp|naturaltime}}</time>
+            <br>
+            <div class="post p-3"><span class=""><br><br>{{post.content}}</span></div>
+            <hr style="width: 100%; height: 2px; background:#000;">
+        </div>
+    </div>
+</article>
+{% endfor %}
+
+{% else %} {% comment "" %} if user is not loged in{% endcomment %}
+
+{% for post in posts %}
+<article>
+    <div class="container-article">
+        <div class='hola'>
+            <img src="{{ post.user.perfiles.image.url }}" align="left" alt={{post.user.username}}>
+            <h2 class="username"><a href="{% url 'otro_usuario' post.user.username %}">@{{post.user.username}}</a></h2>
+                <time data-time="#"><i class="fa fa-clock-o"></i> {{post.timestamp|naturaltime}}</time>
+            <br>
+            <div class="post p-3"><span class=""><br><br>{{post.content}}</span></div>
+            <hr style="width: 100%; height: 2px; background:#000;">
+        </div>
+    </div>
+</article>
+{% endfor %}
+{% endif %}
+
+{% for img in images %}
+<article>
+    <div class="container-article">
+        <div class='hola'>
+            <img src="{{ img.user.perfiles.image.url }}" align="left" alt={{post.user.username}}>
+            <h2 class="username"><a href="{% url 'otro_usuario' img.user.username %}">@{{img.user.username}}</a></h2>
+                <time data-time="#"><i class="fa fa-clock-o"></i> {{img.timestamp|naturaltime}}</time>
+            <br>
+            <img class="border border-secondary" src="{{img.image.url}}" width="350"><span class="p-3" style=''><br><br>{{img.content}}</span>
+            <hr style="width: 100%; height: 2px; background:#000;">
+        </div>
+    </div>
+</article>
+{% endfor %}
+
+<style>
+    *, *::before, *::after {
+        font-size: 13px;
+    }
+    h2, .h2{
+        display: inline-block;
+    }
+    .hola{
+        display: unset;
+        box-sizing: content-box;
+        width: 100%;
+    }
+    article{
+        margin: 100px;
+    }
+    img {
+        border: solid gray;
+        border-radius: 20%;
+        width: 148px;
+        max-width: 100%;
+    }
+    .post-count-container{
+        display: inline-block;
+        width: 100%;
+        text-align: center
+    }
+    h3{
+        display: inline-block;
+        text-align: center;
+        padding: 40px;
+    }
+    .border-secondary{
+        margin-left: 35%;
+        margin-top: 10px;
+        
+        width: 20em;
+    }
+    time{
+        font-size: 13px;
+    }
+</style>
+
+{% endblock %}

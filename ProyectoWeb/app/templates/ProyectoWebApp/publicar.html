@@ -1,0 +1,50 @@
+{% extends 'ProyectoWebApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="container">
+    <h4 class='m-2'>Cuenta como te sientes</h4>
+    <form action="" method='POST'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type='Submit' class='btn btn-primary mt-4'>Publicar</button>
+    </form>
+</div>
+
+<br>
+
+<div class="container">
+    <h4 class='m-2'>¿Tienes algún recuerdo para mostrar?</h4>
+    <form method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {{imageform|crispy}}
+        <button type='Submit' class='btn btn-primary mt-4'>Publicar</button>
+    </form>
+</div>
+
+<div class="rule-conatiner px-5 m-3 mt-5">
+    <h4> Antes de publicar algo recuerda...</h3>
+    <ol>
+        <li class="pt-3">Respetar siempre la comunidad</li>
+        <li class="pt-3">Evitar la publicacion de contenido explicito</li>
+        <li class="pt-3">Divertirte</li>
+    </ol>
+</div>
+
+<style>
+        ul{
+            display: none;
+        }
+        .helptext{
+            display: none;
+        }
+        .form-control{
+            background-color: #fafafa;
+        }
+        @media only screen and (min-width: 1200px) html {
+            font-size: 14px;
+            }
+</style>
+
+{% endblock  %}

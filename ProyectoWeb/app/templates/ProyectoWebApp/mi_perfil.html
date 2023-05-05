@@ -1,0 +1,74 @@
+{% extends 'ProyectoWebApp/comunidad.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<hr style="width: 100%; height: 2px; background:#000;">
+<article>
+    <div class="container-article p-2">
+        {% if user.username != request.user.username %}
+        <img class='profile-image' src="{{ user.perfiles.image.url }}" align="left">{% comment %} <a href="{% url 'mi_perfil' user.username %}"></a>  {% endcomment %}
+        {% else %}
+        <img class='profile-image' src="{{ user.perfiles.image.url }}" align="left">
+        <style>
+            img.profile-image:hover {
+                background: solid orange;
+                border: solid orange;
+                transition: 1.5s ease;
+                opacity: 0.7
+            }
+        </style>
+        {% endif %}
+        <div class='show-profile' style='display: flex;'>
+            <h2 class="p-6"><a href="{% url 'otro_usuario' user.username %}" class=''>@{{user}}</a></h2>
+            {% if request.user.is_authenticated %}
+                {% if user.username != request.user.username %}
+                    {% if user not in request.user.perfiles.following %}
+                        <button type='submit' class='btn btn-primary btn-xl'><a style='color: white;' href="{% url 'follow' user %}">Seguir</a></button>
+                    {% else %}
+                        <button type='submit' class='btn btn-primary btn-xl'><a style='color: black;' href="{% url 'unfollow' user %}">No seguir</a></button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            <div class='followers' style='display: inline-block;'>
+                <h3>Seguidores <i class='fa fa-user'></i> {{user.perfiles.follower.count}}</h3>
+                <h3>Seguidos <i class='fa fa-user'></i> {{user.perfiles.following.count}}</h3>
+            </div>
+        </div>
+    </div>
+</article>
+<hr style="width: 100%; height: 2px; background:#000;">
+
+<h4 class='p-4'>Sobre mi</h4>
+{% if request.user.is_authenticated %}
+    {% if user.username != request.user.username %}
+        <h3>{{user.perfiles.bio}}</h3>
+        {% else %}
+            <form action="{% url 'mi_perfil' %}" method="POST" class='p-2' enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if user.perfiles.bio %}
+                {{user_info|crispy}}
+                <button type='submit' class='border border-secondary ms-4 p-2'><a href="{% url 'setting_profile' 1 %}"><i class='fa fa-cog px-4'>Actualizar</i></a></button>
+                {% else %}
+                {{user_info|crispy}}
+                <button type='submit' class='border border-secondary ms-4 p-2'><a href="{% url 'setting_profile' 1 %}"><i class='fa fa-cog px-4'>Actualizar</i></a></button>
+                {% endif %}
+            </form>
+            <br><br>
+            <h3>{{user.perfiles.bio}}</h3>
+    {% endif %}
+{% endif %}
+
+<hr style="width: 100%; height: 2px; background:#000;">
+<br>
+<div class="post-count-container">
+    <h4> Mis publicaciones</h4>
+    <div class="post-count">
+        <h3><i class='fa fa-comment'></i> {{user.posts.count}}</h3>
+        <h3><i class='fa fa-image'></i> {{user.images.count}}</h3>
+    </div>
+</div>
+
+{{block.super}}
+
+{% endblock %}
